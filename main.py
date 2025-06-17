@@ -13,7 +13,7 @@ def timer(mins):
     while timer.ticking:
         try:
             tick = next(tick_gen)
-            print(f"   {tick}", end="\r", flush=True)
+            print(f"   {tick}     ", end="\r", flush=True)
         except KeyboardInterrupt:
             timer.pause()
             print(f"\r   {tick} [PAUSED] Enter to resume or Ctrl+c to quit", end="\r", flush=True)
