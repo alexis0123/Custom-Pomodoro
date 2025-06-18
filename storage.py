@@ -7,7 +7,7 @@ class Data:
 
         self.path = "journal"
         self.file_path = os.path.join(self.path, "log.json")
-        self.date_today = date.today().strftime("%d/%m/%Y")
+        self.date_today = date.today()
 
         os.makedirs(self.path, exist_ok=True)
 
@@ -29,4 +29,11 @@ class Data:
         if self.date_today not in self.logs:
             self.logs[self.date_today] = {}
 
-        self.logs[self.date_today][task] = {}
+        if task not in self.logs[self.date_today]:
+            self.logs[self.date_today][task] = {"pomos": []}
+
+        else:
+            n = 1
+            while f"{task}({n})" in self.logs[self.date_today]:
+                n += 1
+            self.logs[self.date_today][f"{task}({n})"] = {"pomos": []}
