@@ -17,3 +17,7 @@ class Data:
     def load(self):
         with open(self.file_path, "r") as f:
             return json.load(f)
+        
+    def save(self):
+        with open(self.file_path, "w") as f:
+            json.dump(self.logs, f , indent=2)
