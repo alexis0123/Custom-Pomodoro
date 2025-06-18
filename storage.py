@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime, date, timedelta
 import json
 import os
 
@@ -7,7 +7,7 @@ class Data:
 
         self.path = "journal"
         self.file_path = os.path.join(self.path, "log.json")
-        self.date_today = date.today()
+        self.date_today = date.today().isoformat()
 
         os.makedirs(self.path, exist_ok=True)
 
@@ -61,3 +61,30 @@ class Data:
             tasks.append({"task": task, "pomos": len(self.logs[self.date_today][task]["pomos"])})
 
         return tasks
+    
+    def get_streak(self) -> dict:
+        dates = []
+        day_logs = self.logs.get(self.date_today, {})
+        for task in day_logs:
+            if self.logs[task]:
+                dates.append(datetime.strptime(task, "%Y-%m-%d").date())
+
+        if not dates:
+            return {"longest_streak": 0, "streak": 0}
+        
+        longest_streak = 1
+        streak = 1
+
+        for cur, nxt in zip(dates, dates[1:]):
+            if nxt - cur == timedelta(days=1):
+                streak += 1
+
+            else:
+                streak = 1
+
+            longest_streak = max(longest_streak, streak)
+
+        if (date.today() - dates[-1]).days > 1:
+            streak = 0
+
+        return {"longest_streak": longest_streak, "streak": streak}
