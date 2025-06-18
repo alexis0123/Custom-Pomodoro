@@ -37,3 +37,9 @@ class Data:
             while f"{task}({n})" in self.logs[self.date_today]:
                 n += 1
             self.logs[self.date_today][f"{task}({n})"] = {"pomos": []}
+
+    def add_pomo(self, task, start, end):
+        if task not in self.logs[self.date_today]:
+            raise ValueError(f"{task} doesnt exist.. you must add_task() first")
+
+        self.logs[self.date_today][task]["pomos"].append({"started": start, "ended": end})
