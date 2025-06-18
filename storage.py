@@ -88,3 +88,5 @@ class Data:
             streak = 0
 
         return {"longest_streak": longest_streak, "streak": streak}
+    
+data = Data()
