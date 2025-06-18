@@ -17,7 +17,7 @@ class Data:
 
         self.logs = self.load()
 
-    def load(self):
+    def load(self) -> dict:
         with open(self.file_path, "r") as f:
             return json.load(f)
         
@@ -25,7 +25,7 @@ class Data:
         with open(self.file_path, "w") as f:
             json.dump(self.logs, f , indent=2)
 
-    def add_task(self, task):
+    def add_task(self, task) -> str:
         if self.date_today not in self.logs:
             self.logs[self.date_today] = {}
 
@@ -48,3 +48,9 @@ class Data:
             raise ValueError(f"{task_name} doesnt exist.. you must add_task() first")
 
         self.logs[self.date_today][task_name]["pomos"].append({"started": start, "ended": end, "reflection": reflection})
+
+    def add_reflection(self, task_name, reflection):
+        if task_name not in self.logs[self.date_today]:
+            raise ValueError(f"{task_name} doesnt exist.. you must add_task() first")
+        
+        self.logs[self.date_today][task_name]["reflection"] = reflection
