@@ -29,17 +29,22 @@ class Data:
         if self.date_today not in self.logs:
             self.logs[self.date_today] = {}
 
-        if task not in self.logs[self.date_today]:
+        task_name = task
+
+        if task_name not in self.logs[self.date_today]:
             self.logs[self.date_today][task] = {"pomos": []}
 
         else:
             n = 1
-            while f"{task}({n})" in self.logs[self.date_today]:
+            task_name = f"{task}({n})"
+            while task_name in self.logs[self.date_today]:
                 n += 1
-            self.logs[self.date_today][f"{task}({n})"] = {"pomos": []}
+            self.logs[self.date_today][task_name] = {"pomos": []}
 
-    def add_pomo(self, task, start, end):
-        if task not in self.logs[self.date_today]:
-            raise ValueError(f"{task} doesnt exist.. you must add_task() first")
+        return task_name
 
-        self.logs[self.date_today][task]["pomos"].append({"started": start, "ended": end})
+    def add_pomo(self, task_name, start, end, reflection):
+        if task_name not in self.logs[self.date_today]:
+            raise ValueError(f"{task_name} doesnt exist.. you must add_task() first")
+
+        self.logs[self.date_today][task_name]["pomos"].append({"started": start, "ended": end, "reflection": reflection})
