@@ -1,4 +1,5 @@
 from pomodoro import Timer
+from storage import data
 import sys
 
 def timer(mins):
