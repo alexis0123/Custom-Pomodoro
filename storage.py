@@ -43,11 +43,11 @@ class Data:
 
         return task_name
 
-    def add_pomo(self, task_name, start, end, reflection):
+    def add_pomo(self, task_name, start, end):
         if task_name not in self.logs[self.date_today]:
             raise ValueError(f"{task_name} doesnt exist.. you must add_task() first")
 
-        self.logs[self.date_today][task_name]["pomos"].append({"started": start, "ended": end, "reflection": reflection})
+        self.logs[self.date_today][task_name]["pomos"].append({"started": start, "ended": end})
 
     def add_reflection(self, task_name, reflection):
         if task_name not in self.logs[self.date_today]:
