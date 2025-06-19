@@ -34,6 +34,10 @@ def timer(mins):
     print("   00:00 [DONE]")
 
 def main():
+    if len(sys.argv) < 2:
+        print("Missing [TASK] arg")
+        sys.exit()
+
     timer(25)
 
 if __name__ == "__main__":
