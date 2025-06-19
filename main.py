@@ -3,7 +3,7 @@ import sys
 from storage import data
 import sys
 
-def timer(mins):
+def timer(mins) -> bool:
     timer = Timer(mins)
     timer.start()
     tick_gen = timer.tick()
@@ -26,12 +26,13 @@ def timer(mins):
                 tick_gen = timer.tick()
             except KeyboardInterrupt:
                 print("\r   [ABANDONED]", "  "*20)
-                sys.exit()
+                return False
 
         except StopIteration:
             break
 
     print("   00:00 [DONE]")
+    return True
 
 def main():
     if len(sys.argv) < 2:
