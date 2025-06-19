@@ -1,7 +1,11 @@
+from datetime import datetime
 from pomodoro import Timer
 import sys
 from storage import data
 import sys
+
+def time():
+    return datetime.now().strftime("%I:%M %p")
 
 def timer(mins) -> bool:
     timer = Timer(mins)
@@ -38,8 +42,16 @@ def main():
     if len(sys.argv) < 2:
         print("Missing [TASK] arg")
         sys.exit()
+        
+    task = data.add_task(sys.argv[1])
+    time_start = time()
 
-    timer(25)
+    while True:
+        if timer(25):
+            data.add_pomo(task, time_start, time())
+            data.save()
+        else:
+            break
 
 if __name__ == "__main__":
     main()
