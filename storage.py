@@ -57,6 +57,9 @@ class Data:
 
     def get_tasks(self) -> list:
         tasks = []
+        if self.date_today not in self.logs:
+            return tasks
+        
         for task in self.logs[self.date_today]:
             tasks.append({"task": task, "pomos": len(self.logs[self.date_today][task]["pomos"])})
 
