@@ -1,5 +1,4 @@
-Simple Pomodoro CLI tracker to log focus sessions, reflections, and daily streaks.  
-Built for personal use. No third-party libraries. Pure Python and JSON.
+Logs pomodoros and daily streaks to JSON. I use it to track how often I actually show up.
 
 
 ## 💡 Features
