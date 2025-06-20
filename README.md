@@ -33,10 +33,10 @@ python3 main.py "Study Kotlin"
 
 ## Example output
 
-Daily streak : 5
-"Study Kotlin" : 3 pomos
-Start pomodoro [ENTER]
-Finish Task [F]
+- Daily streak : 5
+- "Study Kotlin" : 3 pomos
+- Start pomodoro [ENTER]
+- Finish Task [F]
 
 
 
