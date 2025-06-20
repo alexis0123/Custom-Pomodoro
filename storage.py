@@ -66,14 +66,14 @@ class Data:
         return tasks
     
     def get_streak(self) -> dict:
-        dates = []
-        day_logs = self.logs.get(self.date_today, {})
-        for task in day_logs:
-            if self.logs[task]:
-                dates.append(datetime.strptime(task, "%Y-%m-%d").date())
-
-        if not dates:
+        if not self.logs:
             return {"longest_streak": 0, "streak": 0}
+        
+        dates = []
+
+        for day in self.logs:
+            if day:
+                dates.append(datetime.strptime(day, "%Y-%m-%d").date())
         
         longest_streak = 1
         streak = 1

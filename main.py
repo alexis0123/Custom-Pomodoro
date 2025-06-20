@@ -57,6 +57,8 @@ def main():
 
     while True:
         os.system("clear")
+        streak = data.get_streak()
+        print(f"Daily streak : {streak['streak']}")
 
         task = data.get_tasks()[-1]
         cur_pomos = task["pomos"]
