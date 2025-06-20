@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 from pomodoro import Timer
 import sys
 from storage import data
@@ -7,13 +8,16 @@ import sys
 def time():
     return datetime.now().strftime("%I:%M %p")
 
+def alarm():
+    os.system("paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
+
 def timer(mins) -> bool:
     timer = Timer(mins)
     timer.start()
     tick_gen = timer.tick()
 
     print("   Ctrl+c to PAUSE\n")
-    print(f"   Start:    {timer.started.strftime('%I:%M %p')}")
+    print(f"   Start   : {timer.started.strftime('%I:%M %p')}")
     print(f"   Est. end: {(timer.started + timer.duration).strftime('%I:%M %p')}")
     print(f"   {'-'*18}")
     while timer.ticking:
@@ -40,18 +44,56 @@ def timer(mins) -> bool:
 
 def main():
     if len(sys.argv) < 2:
-        print("Missing [TASK] arg")
+        print("Finished tasks:")
+        for line in data.get_tasks():
+            task = line["task"]
+            if len(task) > 20:
+                task = line["task"][:20] + "..."
+            print(f"  {task} : {line['pomos']} pomos")
         sys.exit()
         
-    task = data.add_task(sys.argv[1])
+    cur_task = data.add_task(sys.argv[1])
     time_start = time()
 
     while True:
-        if timer(25):
-            data.add_pomo(task, time_start, time())
+        os.system("clear")
+
+        task = data.get_tasks()[-1]
+        cur_pomos = task["pomos"]
+
+        task = cur_task
+        if len(cur_task) > 25:
+            task = cur_task[:25] + "..."
+        print(f"\"{task}\" : {cur_pomos} pomos")
+
+        print("Start pomodoro [ENTER]")
+        if cur_pomos:
+            print("Finish Task [F]")
+            
+        try:
+            prompt = input().strip().lower()
+        except KeyboardInterrupt:
+            os.system("clear")
+            input("[F] To finish task")
+
+        if prompt == "f" and cur_pomos:
+            reflection = input("Reflection: \n")
+            data.add_reflection(cur_task, reflection)
             data.save()
-        else:
             break
+
+        os.system("clear")
+        if timer(25):
+            print(cur_task)
+            data.add_pomo(cur_task, time_start, time())
+            alarm()
+        else:
+            continue
+        
+        os.system("clear")
+        print("BREAK TIME")
+        timer(5)
+        alarm()
 
 if __name__ == "__main__":
     main()
