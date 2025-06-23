@@ -53,9 +53,9 @@ def main():
         sys.exit()
         
     cur_task = data.add_task(sys.argv[1])
-    time_start = time()
 
     while True:
+        time_start = time()
         os.system("clear")
         streak = data.get_streak()
         print(f"Daily streak : {streak['streak']}")
